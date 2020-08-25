@@ -4,7 +4,8 @@ const blobToBuffer = require('blob-to-buffer')
 function noop () {}
 
 module.exports = class IdbkvChunkStore {
-  constructor (chunkLength, { length = Infinity, name = 'idbkv-chunk-store', batchInterval = 10 } = {}) {
+  constructor (chunkLength, { length = Infinity, name = 'idbkv-chunk-store', secondaryName = null, batchInterval = 10 } = {}) {
+    if (secondaryName) name += `-${secondaryName}`
     this._idbkvStore = new Idbkv(name, { batchInterval: batchInterval })
     this.chunkLength = chunkLength
 
